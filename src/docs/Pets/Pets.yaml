@@ -1,0 +1,110 @@
+paths:
+  /api/pets:
+    get:
+      tags:
+        - Pets
+      summary: Get all pets
+      description: Get all pets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:  
+                    type: string
+                    description: Status of the request
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Pet'
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - Pets
+      summary: Create a new pet
+      description: Create a new pet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/createPet'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:  
+                    type: string
+                    description: Status of the request
+                    example: success
+                  payload:
+                    $ref: '#/components/schemas/Pet'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Pet ID
+        name:
+          type: string
+          description: Pet name
+        specie:
+          type: string
+          description: Pet specie
+        birthDate:
+          type: string
+          format: date
+          description: Pet birth date
+        adopted:
+          type: boolean
+          description: Pet adoption status
+        image:
+          type: string
+          description: Pet image URL
+        __v:
+          type: integer
+          description: Pet version
+      example:
+        _id: 5f7b1b7b7b7b7b7b7b7b7b7b
+        name: Max
+        specie: Dog
+        birthDate: 2020-01-01
+        adopted: false
+        image: /path/to/image.jpg
+        __v: 0
+  requestBodies:
+    createPet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Pet name
+        specie:
+          type: string
+          description: Pet specie
+        birthDate:
+          type: string
+          format: date
+          description: Pet birth date
+      example:
+        name: Max
+        specie: Dog
+        birthDate: 2020-01-01

@@ -1,0 +1,42 @@
+paths:
+  /api/adoptions/{uid}/{pid}:
+    post:
+      tags:
+        - Adoptions
+      summary: Create a new adoption
+      description: Create a new adoption
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          description: User ID
+          schema:
+            type: string
+        - in: path
+          name: pid
+          required: true
+          description: Pet ID
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:  
+                    type: string
+                    description: Status of the request
+                    example: success
+                  message:
+                    type: string
+                    description: Message of the request
+                    example: Pet adopted
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
