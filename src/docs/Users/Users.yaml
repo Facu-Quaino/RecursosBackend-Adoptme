@@ -1,0 +1,209 @@
+paths:
+  /api/users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: Get all users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:  
+                    type: string
+                    description: Status of the request
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/User'
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+  /api/users/{uid}:
+    get:
+      tags:
+        - Users
+      summary: Get user by ID
+      description: Get user by ID
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          description: User ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:  
+                    type: string
+                    description: Status of the request
+                    example: success
+                  payload:
+                    $ref: '#/components/schemas/User'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - Users
+      summary: Update user by ID
+      description: Update user by ID
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          description: User ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateUser'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:  
+                    type: string
+                    description: Status of the request
+                    example: success
+                  message:
+                    type: string
+                    description: Message of the request
+                    example: User updated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /api/sessions/register:
+    post:
+      tags:
+        - Users
+      summary: Register a new user
+      description: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/createUser'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:  
+                    type: string
+                    description: Status of the request
+                    example: success
+                  _id:
+                    type: string
+                    description: User ID
+                    example: 5f7b1b7b7b7b7b7b7b7b7b7b
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: User ID
+        fisrt_name:
+          type: string
+          description: User first name
+        last_name:
+          type: string
+          description: User last name
+        email:
+          type: string
+          description: User email
+        password:
+          type: string
+          description: User password
+        role:
+          type: string
+          description: User role
+        pets:
+          type: array
+          description: User pets
+        __v:
+          type: integer
+          description: User version
+      example:
+        _id: 5f7b1b7b7b7b7b7b7b7b7b7b
+        fisrt_name: John
+        last_name: Doe
+        email: johndoe@gmail.com
+        password: johndoe
+        role: admin
+        pets: []
+        __v: 0
+  requestBodies:
+    updateUser:
+            type: object
+            properties:
+              first_name:
+                type: string
+                description: User first name
+              last_name:
+                type: string
+                description: User last name
+              email:
+                type: string
+                description: User email
+            example:
+              first_name: John2
+              last_name: Doe2
+              email: johndoe2@gmail.com
+    createUser:
+            type: object
+            properties:
+              first_name:
+                type: string
+                description: User first name
+              last_name:
+                type: string
+                description: User last name
+              email:
+                type: string
+                description: User email
+              password:
+                type: string
+                description: User password
+            example:
+              first_name: John
+              last_name: Doe
+              email: johndoe@gmail.com
+              password: johndoe     
