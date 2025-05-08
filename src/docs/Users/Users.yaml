@@ -138,7 +138,7 @@ components:
       type: object
       properties:
         _id:
-          type: ObjectId
+          type: string
           description: User ID
         fisrt_name:
           type: string

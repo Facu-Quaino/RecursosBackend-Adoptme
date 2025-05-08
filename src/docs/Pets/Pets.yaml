@@ -61,7 +61,7 @@ components:
       type: object
       properties:
         _id:
-          type: ObjectId
+          type: string
           description: Pet ID
         name:
           type: string
